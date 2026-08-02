@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dossier — A World in Motion, 2015–2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --ink:#1c1a15;
+    --paper:#f3efe4;
+    --paper-2:#ece5d3;
+    --paper-3:#e2d8bf;
+    --rule:#c9bd9e;
+    --rule-strong:#a6976e;
+    --red:#8a2c1f;
+    --red-deep:#5e1c13;
+    --gold:#8a6a1f;
+    --ink-soft:#5b5748;
+    --tag-bg:#ded0a8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Source Serif 4', Georgia, serif;
+    line-height:1.55;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px 80px;}
+
+  .masthead{
+    border-bottom:3px double var(--ink);
+    padding:28px 0 14px;
+    text-align:center;
+  }
+  .masthead .kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--red-deep);
+  }
+  .masthead h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(34px, 5vw, 58px);
+    margin:6px 0 8px;
+    letter-spacing:-0.01em;
+  }
+  .masthead .sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    letter-spacing:.04em;
+  }
+
+  .layout{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    gap:0;
+    margin-top:26px;
+    border-top:1px solid var(--rule-strong);
+  }
+  @media (max-width:860px){
+    .layout{grid-template-columns:1fr;}
+  }
+
+  .toc{
+    border-right:1px solid var(--rule-strong);
+    padding:22px 22px 22px 0;
+  }
+  @media (max-width:860px){
+    .toc{border-right:none;border-bottom:1px solid var(--rule-strong);padding:16px 0;}
+  }
+  .toc-section{margin-bottom:22px;}
+  .toc-section-title{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--red-deep);
+    margin-bottom:8px;
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .toc-section-title .n{color:var(--gold);}
+  .toc-item{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    border-left:2px solid transparent;
+    font-family:'Source Serif 4', serif;
+    font-size:14.5px;
+    color:var(--ink);
+    padding:6px 10px;
+    cursor:pointer;
+    line-height:1.3;
+  }
+  .toc-item:hover{background:var(--paper-2);}
+  .toc-item.active{
+    border-left:2px solid var(--red);
+    background:var(--paper-3);
+    font-weight:600;
+    color:var(--red-deep);
+  }
+  .toc-item .flag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:9.5px;
+    color:var(--gold);
+    letter-spacing:.06em;
+    display:block;
+    margin-top:1px;
+  }
+
+  .reader{padding:22px 0 22px 30px;}
+  @media (max-width:860px){.reader{padding:20px 0;}}
+
+  .article-kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--red-deep);
+    margin-bottom:6px;
+  }
+  .article-title{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(26px,3.4vw,38px);
+    margin:0 0 6px;
+    line-height:1.08;
+  }
+  .article-dek{
+    font-size:16.5px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin:0 0 18px;
+    padding-bottom:18px;
+    border-bottom:1px solid var(--rule);
+  }
+  .article-body p{
+    margin:0 0 15px;
+    font-size:16px;
+  }
+  .article-body h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:18px;
+    margin:26px 0 10px;
+    color:var(--red-deep);
+  }
+
+  .timeline{
+    list-style:none;
+    margin:14px 0 20px;
+    padding:0;
+    border-left:2px solid var(--rule-strong);
+  }
+  .timeline li{
+    position:relative;
+    padding:2px 0 14px 20px;
+    font-size:15px;
+  }
+  .timeline li::before{
+    content:"";
+    position:absolute;
+    left:-6px;
+    top:6px;
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--red);
+  }
+  .timeline .date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    color:var(--gold);
+    letter-spacing:.04em;
+    display:block;
+    margin-bottom:2px;
+  }
+
+  .callout{
+    background:var(--paper-3);
+    border-left:4px solid var(--red);
+    padding:16px 18px;
+    margin:20px 0;
+    font-size:15px;
+  }
+  .callout .callout-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--red-deep);
+    margin-bottom:6px;
+    display:block;
+  }
+  .callout.pk{
+    border-left-color:var(--gold);
+    background:#e9dfc2;
+  }
+  .callout.pk .callout-label{color:#6b4f0c;}
+
+  .status-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:14px 0 20px;
+  }
+  .status-pill{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.03em;
+    background:var(--tag-bg);
+    color:#4a3c12;
+    padding:4px 10px;
+    border-radius:2px;
+  }
+
+  .sources{
+    margin-top:26px;
+    padding-top:14px;
+    border-top:1px dashed var(--rule-strong);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    line-height:1.9;
+  }
+  .sources .lbl{
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--red-deep);
+    display:block;
+    margin-bottom:4px;
+  }
+
+  .placeholder{
+    font-style:italic;
+    color:var(--ink-soft);
+    padding:60px 0;
+    text-align:center;
+  }
+
+  .search-box{margin-bottom:16px;}
+  .search-box input{
+    width:100%;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    padding:8px 10px;
+    background:var(--paper-2);
+    border:1px solid var(--rule-strong);
+    color:var(--ink);
+  }
+  .search-box input::placeholder{color:var(--ink-soft);}
+
+  .nav-buttons{
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+    padding-top:14px;
+    border-top:1px solid var(--rule);
+  }
+  .nav-buttons button{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    background:none;
+    border:1px solid var(--rule-strong);
+    padding:8px 14px;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .nav-buttons button:hover{background:var(--paper-3);}
+  .nav-buttons button:disabled{opacity:.3;cursor:default;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <div class="kicker">A reader's dossier · compiled August 2, 2026</div>
+    <h1>The World in Motion</h1>
+    <div class="sub">CONFLICTS · MACRO SHIFTS · SOUTH ASIA · KASHMIR · GOVERNANCE — WITH A PAKISTAN THREAD THROUGHOUT</div>
+  </div>
+
+  <div class="layout">
+    <div class="toc">
+      <div class="search-box"><input id="searchInput" type="text" placeholder="Search topics..." oninput="filterTOC(this.value)"></div>
+      <div id="tocContainer"></div>
+    </div>
+    <div class="reader" id="reader">
+      <div class="placeholder">Select a topic from the left to begin reading.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  "conflicts": {
+    title: "Global conflicts & wars",
+    topics: {
+      "ukraine": {
+        flag: "★ Pakistan role: minor",
+        kicker: "Europe · war of attrition",
+        title: "Russia–Ukraine: the war of attrition",
+        dek: "Now in its fifth year, the war has hardened into grinding attritional fighting, drone warfare, and a stalled diplomatic track — even as it reshapes NATO, European defense spending, and global energy markets.",
+        status: ["Active — high intensity", "No ceasefire", "5th year"],
+        body: `
+          <p>Russia's full-scale invasion of Ukraine began on 24 February 2022. What Moscow expected to be a quick campaign to topple the government in Kyiv instead became Europe's largest land war since 1945. Ukraine's defense, backed by Western arms and intelligence, blunted the initial assault and pushed Russian forces back from Kyiv, Kharkiv, and parts of Kherson in 2022. Since then the front line has moved only incrementally, at enormous cost on both sides.</p>
+          <h3>Where things stand</h3>
+          <p>By mid-2026 the war has become a contest of attrition rather than maneuver. Russia has been making slow, grinding territorial gains in the Donbas and around Pokrovsk — on the order of a few dozen square miles a month — while absorbing extraordinary personnel losses estimated well over a million killed and wounded since 2022. Ukraine has increasingly relied on long-range drone and missile strikes deep into Russian territory, hitting oil refineries, rail links, and even naval and industrial targets far from the front, degrading Russian refining capacity by roughly a quarter. Both sides continue to trade nightly missile and drone barrages against cities, with continuing civilian casualties on both sides.</p>
+          <h3>Diplomacy, sanctions, and NATO</h3>
+          <p>Multiple rounds of talks, including sessions in Istanbul, have failed to produce a durable ceasefire. Western sanctions on Russia's energy, financial, and defense sectors remain in place and have been repeatedly tightened, while Russia has adapted through sanctions evasion, a "shadow fleet" of tankers, and deepened trade with China, India, and North Korea (which has supplied troops and munitions). NATO membership for Ukraine remains unresolved, but the war has driven the alliance's largest expansion and rearmament push in decades, with Finland and Sweden joining and European members sharply raising defense budgets.</p>
+          <h3>The bigger picture</h3>
+          <p>The conflict has become a proving ground for drone and electronic warfare that militaries worldwide are studying closely, and it has reordered global energy and grain markets, food security in the developing world, and the broader US–Russia and Europe–Russia relationship for a generation.</p>
+        `,
+        sources: "Institute for the Study of War · Russia Matters War Report Card · Ukrainian and Russian defense ministries · Wikipedia timeline of the Russo-Ukrainian war"
+      },
+      "gaza": {
+        flag: "★ Pakistan role: diplomatic/moral solidarity",
+        kicker: "Middle East · fragile ceasefire",
+        title: "Israel–Hamas: Gaza after the ceasefire",
+        dek: "A US-brokered ceasefire has held, unevenly, since October 2025 — but disarmament, governance, and reconstruction remain unresolved, and sporadic strikes continue to kill Palestinians and, occasionally, Israeli soldiers.",
+        status: ["Ceasefire in force since Oct 2025", "Fragile — repeated violations", "Disarmament unresolved"],
+        body: `
+          <p>The war that began after Hamas's 7 October 2023 attack on Israel, which killed roughly 1,200 people and took over 250 hostages, became the deadliest and most destructive round of the Israeli-Palestinian conflict in decades, killing tens of thousands of Palestinians and levelling much of the Gaza Strip. After an earlier January 2025 ceasefire collapsed, a new US-brokered 20-point peace plan took effect on 10 October 2025, mediated by the US, Qatar, Egypt, and Turkey.</p>
+          <h3>Where things stand</h3>
+          <p>The ceasefire has held in broad terms but remains fragile. Israel has withdrawn from roughly half of Gaza's territory behind a so-called "Yellow Line," while Hamas retains control of the rest. All living hostages were freed early in the process, and the remains of the last deceased Israeli hostage were recovered in January 2026. Israeli strikes and Hamas attacks on soldiers who remain in tunnels on the Israeli-controlled side have continued intermittently; by mid-2026, well over a thousand Palestinians had reportedly been killed since the ceasefire technically began. In July 2026, Hamas agreed in principle to a staged disarmament and to hand civil governance to a Palestinian technocratic committee, under a new "Doha-style" roadmap backed by the Board of Peace and an international stabilization force — though implementation has been slow and Israel has not fully committed to reciprocal withdrawal.</p>
+          <h3>Reconstruction and governance</h3>
+          <p>Plans for Gaza's future range from a technocratic Palestinian administration to more contested US-linked proposals for "alternative safe communities" and speculative redevelopment concepts, which most regional and humanitarian experts view as unrealistic given the scale of destruction and displacement. The UN continues to warn that humanitarian conditions remain dire.</p>
+          <h3>Regional spillover</h3>
+          <p>The war metastasized regionally: Hezbollah opened a front from Lebanon that drew a heavy Israeli response and later a fragile Lebanon ceasefire; Yemen's Houthis launched sustained attacks on shipping in the Red Sea and Gulf of Aden in the name of Gaza, disrupting global trade routes; and Israel and the US separately struck Iran and Iran-linked targets amid the broader regional tension, including strikes tied to Iran's nuclear program in 2025.</p>
+        `,
+        sources: "Al Jazeera · CNN · UN Office for the Coordination of Humanitarian Affairs · J Street · Congressional Research Service"
+      },
+      "syria": {
+        flag: "★ Pakistan role: minimal, diplomatic recognition",
+        kicker: "Middle East · post-Assad transition",
+        title: "Syria after Assad: a fragile new order",
+        dek: "Eighteen months after Bashar al-Assad fled to Russia, Ahmed al-Sharaa's transitional government has won sweeping international rehabilitation — but sectarian violence, a fractured Kurdish-led northeast, and the hard work of constitution-writing remain unresolved.",
+        status: ["Transitional government", "5-year transition period", "Sanctions largely lifted"],
+        body: `
+          <p>Bashar al-Assad's five-decade family dynasty collapsed in days in December 2024, as a rebel offensive led by Hay'at Tahrir al-Sham (HTS) swept from Idlib to Damascus, ending Syria's 13-year civil war. Assad fled to Russia. HTS leader Ahmed al-Sharaa was declared transitional president in January 2025, and an interim constitutional declaration took effect that March.</p>
+          <h3>Where things stand</h3>
+          <p>Syria has made real progress: Western sanctions have been substantially lifted, HTS was removed from the US terrorism list, and Damascus has re-engaged diplomatically across the region. But the transition remains fragile. Sectarian violence has flared repeatedly, including attacks on Alawite communities linked to the old regime and clashes in Druze-majority Sweida. Negotiations with the Kurdish-led Syrian Democratic Forces (SDF) over integrating their territory and forces into the new Syrian state broke down, and in January 2026 government forces launched a major offensive that captured roughly 80% of the north-east, including camps holding ISIS-linked detainees — a flashpoint that worries the US and European partners who rely on the SDF against ISIS remnants.</p>
+          <h3>What's unresolved</h3>
+          <p>A five-year transitional period is underway, during which Syria must write a permanent constitution, reconcile minority and Kurdish rights with the new government's Islamist origins, rebuild a shattered economy, and account for the previous regime's atrocities and chemical weapons program. Analysts warn that without genuine domestic reform, Syria risks following the unstable post-transition paths of Iraq or Libya rather than achieving durable stability.</p>
+        `,
+        sources: "UK House of Commons Library · Atlantic Council · European Council on Foreign Relations · Council on Foreign Relations Global Conflict Tracker"
+      },
+      "sudan": {
+        flag: "★ Pakistan role: none direct; OIC solidarity",
+        kicker: "Africa · world's largest displacement crisis",
+        title: "Sudan: a stalemated civil war, a famine",
+        dek: "Since April 2023, the Sudanese Armed Forces and the paramilitary Rapid Support Forces have fought each other to a bloody stalemate, displacing roughly 14 million people and producing confirmed famine in Darfur.",
+        status: ["Active — high intensity", "Famine confirmed (IPC Phase 5)", "~14 million displaced"],
+        body: `
+          <p>Sudan's civil war erupted in April 2023 out of a power struggle between two generals who had jointly engineered the 2021 coup that derailed the country's post-Bashir democratic transition: Abdel Fattah al-Burhan, commanding the Sudanese Armed Forces (SAF), and Mohamed Hamdan "Hemedti" Dagalo, commanding the paramilitary Rapid Support Forces (RSF).</p>
+          <h3>Where things stand</h3>
+          <p>By mid-2026 the war has settled into a rough territorial stalemate. The SAF holds Khartoum — retaken in 2025 — along with most of the north, center, and east. The RSF dominates Darfur, including El-Fasher, captured in October 2025 amid reported ethnically-motivated mass killings, and pockets of Kordofan and Blue Nile state, where fighting continues alongside allied rebel factions. The RSF also declared a rival "Government of Peace and Unity" in mid-2025, effectively partitioning the country's political map alongside its territorial one.</p>
+          <h3>The humanitarian toll</h3>
+          <p>The UN describes Sudan as the world's largest displacement crisis, with roughly 14 million people forced from their homes. The Integrated Food Security Phase Classification has confirmed famine conditions in El-Fasher and Kadugli, and confirmed death tolls from monitoring groups exceed 58,000, with real figures likely far higher. Reports of ethnic cleansing and sexual violence against non-Arab communities in Darfur have drawn comparisons to the 2000s Darfur genocide.</p>
+        `,
+        sources: "ACLED · Freedom House · Sudans Post · Wikipedia timeline of the Sudanese civil war (2026)"
+      },
+      "myanmar": {
+        flag: "★ Pakistan role: none",
+        kicker: "Southeast Asia · longest-running civil war",
+        title: "Myanmar: junta gains ground, resistance holds on",
+        dek: "Five years after the 2021 coup, the military has clawed back territory from a still-fragmented resistance — while a sham election has installed a civilian-fronted, military-controlled government.",
+        status: ["Active", "Junta regained momentum in 2026", "Resistance controls ~1/3–1/2 of territory"],
+        body: `
+          <p>The Tatmadaw's February 2021 coup against Aung San Suu Kyi's elected government triggered mass civil disobedience, then a nationwide armed uprising combining a parallel National Unity Government (NUG), local People's Defense Forces, and long-standing ethnic armed organizations such as the Arakan Army, Kachin Independence Army, and Ta'ang National Liberation Army.</p>
+          <h3>Where things stand</h3>
+          <p>Momentum swung sharply toward the resistance in 2023–2024, when the "Three Brotherhood Alliance" offensive captured large swaths of Shan, Arakan, and Chin states. But through 2025 and into 2026 the junta — leveraging total air superiority, drones, and continued backing from China and Russia — has retaken key towns including Tagaung and a critical Mandalay–Myitkyina road, while resistance forces face chronic ammunition shortages. The junta held a widely dismissed "sham" election in December 2025–January 2026, installing a military-aligned civilian government under Min Aung Hlaing, who stepped down as commander-in-chief to become president while retaining ultimate control. A new "SCEF" resistance alliance has since been built to unify the historically fragmented opposition, but analysts describe mid-2026 as "five minutes to midnight" for the resistance's viability.</p>
+          <h3>The toll</h3>
+          <p>Myanmar's is now considered the world's most fragmented active conflict, with well over a thousand armed factions tracked by researchers, roughly 5 million people displaced, and a devastating March 2025 earthquake compounding an already catastrophic humanitarian situation.</p>
+        `,
+        sources: "Council on Foreign Relations · Asia Times · War on the Rocks · BTI Project · Defcon Level"
+      },
+      "drc": {
+        flag: "★ Pakistan role: none direct",
+        kicker: "Central Africa · Doha peace process",
+        title: "DRC: the M23 war and a fragile Doha framework",
+        dek: "Rwanda-backed M23 rebels seized swaths of mineral-rich eastern Congo, including Goma, before a Qatar-mediated peace framework began — slowly, and with repeated violations — to walk the conflict back.",
+        status: ["Doha Framework signed Nov 2025", "Implementation stalled/fragile", "Ceasefire violations on both sides"],
+        body: `
+          <p>The M23 movement, one of dozens of armed groups long active in eastern DRC's North and South Kivu provinces, merged with the Congo River Alliance (AFC) in 2023 and, backed by Rwanda, seized vast territory in early 2025, including the provincial capital Goma — a major escalation of a conflict rooted in the unfinished business of the 1994 Rwandan genocide, ethnic tensions, and control of Congo's vast mineral wealth (coltan, cobalt, tin) critical to global electronics supply chains.</p>
+          <h3>Where things stand</h3>
+          <p>Under US, Qatari, and African Union mediation, the DRC government and M23/AFC signed a ceasefire in Doha in July 2025 and a more comprehensive "Doha Framework for a Comprehensive Peace Agreement" in November 2025, alongside a separate US-brokered Rwanda–DRC peace deal. M23 unilaterally withdrew from the city of Uvira in December 2025 as a confidence-building gesture. But talks on the eight substantive "root cause" pillars of the conflict — territorial administration, prisoner exchanges, and M23's political integration — have repeatedly stalled through 2026, with both sides accusing each other of ceasefire violations, and M23 representatives at one point failing to appear for a scheduled final signing.</p>
+          <h3>Why it matters</h3>
+          <p>Beyond the immediate humanitarian toll — hundreds of civilians killed in M23-controlled areas according to UN reporting — the war sits atop the supply chains for minerals essential to smartphones, batteries, and the broader AI-and-electronics economy, giving the conflict outsized global economic stakes.</p>
+        `,
+        sources: "Critical Threats Project · African Union · Al Jazeera · AllAfrica"
+      },
+      "other-instability": {
+        flag: "★ Pakistan role: none direct",
+        kicker: "Global · fragile states",
+        title: "Haiti, the Sahel, Somalia, and Latin America's cartels",
+        dek: "A belt of state fragility stretches from the Caribbean through West Africa to the Horn — plus the entrenched, business-model violence of Latin American organized crime.",
+        status: ["Multiple, distinct crises", "Ongoing"],
+        body: `
+          <h3>Haiti — gang rule</h3>
+          <p>Armed gang coalitions, most prominently the "Viv Ansanm" alliance, control most of the capital Port-au-Prince and large parts of the country, having effectively displaced the Haitian state. A Kenya-led Multinational Security Support mission has struggled to reverse gang control amid chronic underfunding, while political transition efforts (a transitional presidential council) have failed to restore functioning governance. Hundreds of thousands remain internally displaced, and gang violence has increasingly spread into previously safer regions.</p>
+          <h3>The Sahel — jihadist insurgency</h3>
+          <p>Mali, Burkina Faso, and Niger — now aligned as the military-junta-led "Alliance of Sahel States" after each experienced coups and expelled French and UN forces in favor of Russian (Wagner/Africa Corps) security partnerships — face expanding insurgencies from al-Qaeda-linked JNIM and Islamic State Sahel Province. Jihadist groups have imposed blockades on regional capitals and towns, driving a severe humanitarian crisis alongside worsening state repression of civilians and journalists.</p>
+          <h3>Somalia</h3>
+          <p>Al-Shabaab continues to control significant rural territory despite African Union and Somali federal offensives, exploiting clan politics and periodic government dysfunction; Islamic State's small Puntland faction adds a second, smaller insurgent front.</p>
+          <h3>Latin America — cartel violence</h3>
+          <p>Mexican cartels (Sinaloa, CJNG, and their splinters) and gangs across Central America (Ecuador, Honduras) continue to drive record homicide rates, extensive state capture through corruption, and mass migration pressure. The Trump administration has designated several cartels as foreign terrorist organizations and threatened unilateral strikes on cartel infrastructure, escalating a long-simmering debate over US military involvement in Mexico.</p>
+        `,
+        sources: "UN OCHA · International Crisis Group · Council on Foreign Relations"
+      }
+    }
+  },
+  "macro": {
+    title: "Global macro shifts (2015–2026)",
+    topics: {
+      "pandemic-economy": {
+        flag: "★ Pakistan role: IMF program recipient",
+        kicker: "Public health & economy",
+        title: "COVID-19's long economic shadow",
+        dek: "Five years on, the pandemic's fiscal and monetary aftershocks — debt, inflation, and the highest interest rates in a generation — are still working through the global economy.",
+        status: ["Post-acute phase", "Rates normalizing gradually"],
+        body: `
+          <p>The COVID-19 pandemic (2020–2023) triggered the deepest synchronized global recession since the Depression, followed by an unprecedented wave of fiscal stimulus and monetary easing. That combination — alongside pandemic-era supply chain breakdowns and the energy shock from Russia's invasion of Ukraine — produced the sharpest global inflation surge in four decades during 2022–2023.</p>
+          <h3>The response and its aftermath</h3>
+          <p>Central banks, led by the US Federal Reserve, raised interest rates at the fastest pace in decades to bring inflation down, which succeeded in most advanced economies by 2024–2025 but left a legacy of higher borrowing costs, strained housing markets, and elevated government debt loads. Developing economies — including Pakistan, Sri Lanka, and Egypt — faced acute balance-of-payments crises as dollar debt became more expensive to service, driving a wave of IMF bailout programs across the Global South through the mid-2020s. Supply chains have partially "reshored" or diversified away from single-country dependence (especially on China), a trend accelerated by both pandemic lessons and geopolitical rivalry.</p>
+        `,
+        sources: "IMF · World Bank · Federal Reserve"
+      },
+      "ai-semiconductors": {
+        flag: "★ Pakistan role: minor tech-adoption player",
+        kicker: "Technology · the defining rivalry",
+        title: "The generative AI boom and the chip war",
+        dek: "Large language models moved from research labs to daily life in three years — and the semiconductors that power them have become the central front of US–China strategic competition.",
+        status: ["Rapidly evolving", "Export controls tightening/loosening"],
+        body: `
+          <p>The release of ChatGPT in late 2022 triggered a global race among tech companies and governments to build and control large language model ("generative AI") capabilities. By 2026, AI systems from OpenAI, Google, Anthropic, Meta, and Chinese labs like DeepMind's Chinese counterparts and DeepSeek have become embedded in software development, customer service, scientific research, and increasingly in agentic tools that can act on a person's behalf — alongside intense debate over AI safety, labor displacement, and misinformation.</p>
+          <h3>The chip war</h3>
+          <p>Because state-of-the-art AI requires advanced semiconductors, the industry sits atop an extraordinarily concentrated supply chain — Taiwan's TSMC alone fabricates the overwhelming majority of the world's most advanced chips. The US has progressively tightened export controls on advanced chips and chip-making equipment to China since 2022, aiming to slow Beijing's military and AI development, while China has restricted exports of rare-earth minerals critical to electronics and defense in response. Taiwan's central role — and its disputed status vis-à-vis China — has made the island a potential flashpoint whose economic stakes now rival its geopolitical ones, a dynamic often called "silicon shield" deterrence.</p>
+        `,
+        sources: "Reuters · Semiconductor Industry Association · CSIS"
+      },
+      "geopolitics-climate": {
+        flag: "★ Pakistan role: BRICS partner, climate-vulnerable state",
+        kicker: "Great-power competition & the climate",
+        title: "US–China rivalry, Brexit's legacy, and a multipolar world",
+        dek: "A decade of realignment — Britain's 2020 exit from the EU, the steady expansion of BRICS, and intensifying US–China competition — is reshaping trade blocs even as extreme weather forces a harder climate reckoning.",
+        status: ["Structural, long-running shifts"],
+        body: `
+          <p>The UK's 2016 Brexit referendum and 2020 formal EU exit reshaped European trade and politics, contributing to years of UK economic underperformance relative to pre-referendum forecasts while the EU pressed ahead with deeper integration among remaining members. Simultaneously, US–China relations have shifted from engagement to open strategic rivalry across trade, technology, Taiwan, and the South China Sea, with tariffs, export controls, and "de-risking" supply chain policies now bipartisan features of Washington's approach.</p>
+          <h3>A more multipolar order</h3>
+          <p>BRICS (Brazil, Russia, India, China, South Africa) expanded in 2024 to admit Egypt, Ethiopia, Iran, the UAE, and others, explicitly positioning itself as a counterweight to a Western-led international order — though internal divergences (India–China rivalry, differing views on Russia) limit its cohesion as a bloc. Meanwhile, extreme weather — from Pakistan's catastrophic 2022 floods to repeated heat waves, wildfires, and storms worldwide — has pushed climate adaptation and finance higher on the international agenda even as global emissions-reduction targets continue to be missed and green-energy transition politics remain contentious in many democracies.</p>
+        `,
+        sources: "Council on Foreign Relations · Chatham House · IPCC"
+      }
+    }
+  },
+  "south-asia": {
+    title: "South Asian upheavals",
+    topics: {
+      "bangladesh": {
+        flag: "★ Pakistan role: warming ties post-Hasina",
+        kicker: "Bangladesh · from uprising to election",
+        title: "Bangladesh: from the July uprising to a BNP landslide",
+        dek: "A student-led movement ended Sheikh Hasina's 15-year rule in August 2024. Eighteen months of interim rule under Nobel laureate Muhammad Yunus culminated in a February 2026 election won decisively by the Bangladesh Nationalist Party.",
+        status: ["Elected government since Feb 2026", "Tarique Rahman, PM", "Awami League banned from contesting"],
+        body: `
+          <p>In July–August 2024, a student movement that began as protest against a discriminatory civil-service job quota system escalated into a nationwide uprising against Prime Minister Sheikh Hasina's increasingly authoritarian 15-year rule. Security forces killed hundreds of protesters, and on 5 August 2024 Hasina fled to India as crowds stormed her official residence, ending her Awami League's long dominance.</p>
+          <h3>The interim government</h3>
+          <p>Muhammad Yunus, the Nobel Peace Prize-winning microfinance pioneer, was sworn in as Chief Adviser of an interim government on 8 August 2024, tasked with stabilizing the country, pursuing institutional reforms (judicial, electoral, police, constitutional), and organizing elections. Yunus repeatedly shifted the promised election date under pressure from the Bangladesh Nationalist Party (BNP), which wanted a faster path to power, eventually settling on February 2026. His government formally disbanded the Awami League and barred it from contesting, a move critics said disenfranchised a large bloc of voters even as it reflected the depth of public anger at Hasina's rule.</p>
+          <h3>The 2026 election</h3>
+          <p>Bangladesh's 13th general election, held in February 2026 alongside a referendum on a "July Charter" of institutional reforms, saw the BNP — led by Tarique Rahman, son of former PM Khaleda Zia, who returned from 17 years of exile in London just two months before polling — win a sweeping two-thirds majority (roughly 209–212 of 297 declared seats). Jamaat-e-Islami, contesting freely for the first time since a 2013 ban, came a distant second with its best-ever result. Turnout was around 60%, and international observers broadly described the vote as among the most credible in decades, though Jamaat and some civil society voices raised integrity concerns. Rahman is set to become prime minister, marking a historic return for the Zia family and a definitive end to the Hasina era.</p>
+        `,
+        sources: "Al Jazeera · The Daily Star · NPR · Outlook India"
+      },
+      "pakistan": {
+        flag: "",
+        kicker: "Pakistan · military ascendant, economy fragile",
+        title: "Pakistan: political churn, a four-day war, and a military constitutionally entrenched",
+        dek: "From Imran Khan's 2022 ouster to a 2025 war with India and a 2025 constitutional overhaul that gave the army chief lifetime power, Pakistan's last four years have reshaped its civil-military balance decisively toward the latter.",
+        status: ["PM Shehbaz Sharif", "Field Marshal Asim Munir, Chief of Defence Forces", "Imran Khan imprisoned"],
+        body: `
+          <p>Pakistan's ongoing political crisis dates to April 2022, when Imran Khan was removed as prime minister via a no-confidence vote after falling out with the military establishment that had helped bring him to power in 2018. Khan's Pakistan Tehreek-e-Insaf (PTI) launched a sustained protest campaign demanding early elections, culminating in his arrest in May 2023 (which triggered nationwide riots) and a second arrest in August 2023, after which he has remained imprisoned on a series of corruption, terrorism, and other charges — including a 2026 sentence, alongside his wife Bushra Bibi, to 17 years on corruption counts. PTI-backed independents performed strongly in the disputed February 2024 general election despite what international observers and PTI itself described as manipulation, but a coalition led by the Pakistan Muslim League-Nawaz (PML-N) and Pakistan Peoples Party formed government, returning Shehbaz Sharif as prime minister with Asif Ali Zardari as president.</p>
+          <h3>Economy</h3>
+          <p>Pakistan spent 2022–2023 in acute economic crisis — a collapsing rupee, near-default foreign reserves, and record inflation — before securing a series of IMF bailout packages that stabilized the currency and macro indicators through 2024–2026, though at the cost of painful subsidy cuts and tax increases that have fed recurring public unrest (including the Azad Kashmir protests, below). Devastating floods in 2022, which submerged roughly a third of the country and displaced tens of millions, compounded the economic strain and have shaped Pakistan's climate-finance diplomacy since.</p>
+          <h3>The 2025 war with India, and its constitutional aftermath</h3>
+          <p>An April 2025 terrorist attack in Pahalgam, Indian-administered Kashmir, that killed 26 civilians triggered India's "Operation Sindoor" — air and missile strikes on sites in Pakistan and Pakistan-administered Kashmir that India said targeted militant infrastructure. Pakistan retaliated, and the two nuclear-armed neighbors fought an intense four-day conventional conflict (7–10 May 2025) involving air combat, drone strikes, and shelling before a ceasefire took hold. Both sides claimed to have inflicted significant losses; India said it destroyed terrorist camps, Pakistan said it downed Indian jets. It was the most serious India–Pakistan military clash in decades.</p>
+          <p>In the war's aftermath, Pakistan's army chief Asim Munir was promoted to Field Marshal (only the second such promotion in the country's history), and in November 2025 parliament passed the 27th Constitutional Amendment, creating a new "Chief of Defence Forces" post — held by Munir — that unifies command of all three armed services under a single officer with a five-year, renewable term and lifetime legal immunity, alongside similar immunity for the president. The amendment also created a new Federal Constitutional Court and curtailed the Supreme Court's powers, building on the 2024 26th Amendment, which had already shifted judicial appointments toward parliamentary and executive control. Rights groups including Amnesty International have warned the changes seriously erode judicial independence and formalize military dominance over civilian government.</p>
+        `,
+        sources: "Britannica · Wikipedia (Pakistani political crisis 2022–present) · ThePrint · Supreme Court Observer · Deccan Herald"
+      },
+      "india": {
+        flag: "★ Pakistan role: primary rival",
+        kicker: "India · continuity and legal overhaul",
+        title: "India: Modi's continued dominance and a rewritten legal code",
+        dek: "Narendra Modi's BJP has held power through a decade of consequential change — from Article 370's revocation to a wholesale replacement of India's colonial-era criminal code — while India's economy and diplomatic weight have grown.",
+        status: ["PM Modi, 3rd term (coalition-dependent since 2024)", "G20 host in 2023", "New criminal codes in force"],
+        body: `
+          <p>Narendra Modi and the Bharatiya Janata Party (BJP) have governed India since 2014, winning a third consecutive term in 2024 — though for the first time needing coalition partners after the BJP lost its outright parliamentary majority. Modi's tenure has been marked by an assertive Hindu-nationalist policy agenda alongside rapid economic growth that has made India the world's most populous country and one of its fastest-growing large economies, culminating in India's high-profile hosting of the G20 summit in 2023.</p>
+          <h3>Kashmir and citizenship</h3>
+          <p>In August 2019, Modi's government revoked Article 370 of the constitution, which had granted special autonomous status to Jammu and Kashmir, and split the state into two federally administered territories — a move followed by a prolonged communications blackout and mass detentions in the region, and one that remains deeply contested (see the Kashmir section). The 2019 Citizenship Amendment Act (CAA), which offers expedited citizenship to non-Muslim migrants from neighboring countries, sparked large nationwide protests over its perceived discrimination against Muslims before being formally notified for implementation in 2024.</p>
+          <h3>Farmers' protests and the criminal law overhaul</h3>
+          <p>Three 2020 farm laws deregulating agricultural markets triggered a year-long farmers' protest, among the largest sustained demonstrations in Indian history, ending when Modi repealed the laws in late 2021. More recently, India replaced its colonial-era criminal codes — the Indian Penal Code, Criminal Procedure Code, and Evidence Act — with three new laws, the Bharatiya Nyaya Sanhita, Bharatiya Nagarik Suraksha Sanhita, and Bharatiya Sakshya Adhiniyam, which took effect in 2024, alongside passage of a long-pending Women's Reservation Act guaranteeing 33% of legislative seats for women.</p>
+        `,
+        sources: "Reuters · PRS Legislative Research · Ministry of Home Affairs, India"
+      },
+      "sri-lanka": {
+        flag: "★ Pakistan role: minor, IMF-peer solidarity",
+        kicker: "Sri Lanka · from collapse to a fragile reset",
+        title: "Sri Lanka: the Aragalaya, default, and a reformist government tested",
+        dek: "Mass protests toppled a president in 2022 after the country's worst-ever economic collapse. The reformist government elected in 2024 has stabilized the economy but is now battling a cyclone's aftermath and its own credibility.",
+        status: ["President Anura Kumara Dissanayake (NPP)", "IMF program ongoing", "Recovering from Cyclone Ditwah"],
+        body: `
+          <p>Decades of unsustainable borrowing, tax cuts, and mismanagement culminated in Sri Lanka's 2022 sovereign default — its first ever — triggering severe shortages of fuel, medicine, and food. The resulting "Aragalaya" ("struggle") protest movement occupied the presidential compound in Colombo in July 2022, forcing President Gotabaya Rajapaksa to flee the country and resign, ending the Rajapaksa family's long dominance of Sri Lankan politics.</p>
+          <h3>A reformist mandate — and its limits</h3>
+          <p>After a period of IMF-backed stabilization under interim President Ranil Wickremesinghe, Sri Lankans elected Anura Kumara Dissanayake — a leftist reformer from the National People's Power (NPP) alliance who had criticized the IMF program on the campaign trail — as president in September 2024, followed by a landslide NPP parliamentary win weeks later. In office, Dissanayake has largely maintained the existing IMF program, arguing the recovery remains too fragile to risk, and Sri Lanka's macroeconomic indicators have stabilized. But the government's first full year in power has been complicated by devastating Cyclone Ditwah in late 2025, which stalled the recovery, and by a string of controversies — including the NPP blocking a no-confidence motion against one of its own officials in April 2026 — that critics say have damaged its "clean government" credibility.</p>
+        `,
+        sources: "International Crisis Group · BTI Project · Congressional Research Service"
+      },
+      "nepal": {
+        flag: "★ Pakistan role: none direct",
+        kicker: "Nepal · a Gen Z uprising",
+        title: "Nepal: Gen Z topples a government, then elects a new one",
+        dek: "A government ban on social media apps ignited the deadliest protests in Nepal's modern history in September 2025 — and, within six months, propelled a political outsider to the prime ministership.",
+        status: ["PM Balendra Shah (RSP), since March 2026", "Interim PM Sushila Karki bridged the gap"],
+        body: `
+          <p>On 8 September 2025, Nepal's government banned 26 social media platforms, ostensibly for failing to register locally — but widely seen as retaliation against viral "nepo-kid" content mocking the lavish lifestyles of politicians' children amid the country's deep youth unemployment and inequality. The ban ignited protests led by young Nepalis, many organizing over Discord and other platforms still accessible.</p>
+          <h3>The uprising</h3>
+          <p>Security forces killed at least 19–21 protesters on 8 September in one of the deadliest single-day protest crackdowns in Nepal's history. The following day, enraged crowds set fire to parliament, the presidential residence, and Prime Minister K.P. Sharma Oli's house; Oli resigned that day. Over roughly five days of unrest, 74–76 people died and more than 2,300 were injured — the worst political violence Nepal has seen since the end of its Maoist civil war. On 12 September, former Chief Justice Sushila Karki was sworn in — via an extra-constitutional process endorsed by the president — as Nepal's first female prime minister, leading a caretaker government tasked with holding fresh elections.</p>
+          <h3>A new government</h3>
+          <p>An early election held on 5 March 2026 delivered a landslide to the Rastriya Swatantra Party (RSP), a relatively new anti-establishment party. Its leader, Balendra Shah — a 35-year-old former rapper and ex-mayor of Kathmandu — defeated veteran K.P. Oli in Oli's own constituency and became prime minister, ending years of rotating coalitions among Nepal's established parties. Shah now faces pressure to deliver economic reform and accountability for the September violence while navigating Nepal's delicate balancing act between India and China.</p>
+        `,
+        sources: "Carnegie Endowment · International Crisis Group · CIVICUS Lens · PBS NewsHour"
+      }
+    }
+  },
+  "kashmir": {
+    title: "Kashmir developments",
+    topics: {
+      "ajk": {
+        flag: "★ Pakistan role: central — direct governance dispute",
+        kicker: "Azad Jammu & Kashmir · civil unrest",
+        title: "Azad Kashmir: recurring strikes over subsidies, seats, and elite privilege",
+        dek: "A civil society coalition, the JKJAAC, has led escalating protest waves against Islamabad and the Azad Kashmir government since 2023 — culminating in violent clashes during 2026's regional election.",
+        status: ["JKJAAC vs. federal & AJK governments", "38-point charter of demands", "Deaths in 2026 protest wave"],
+        body: `
+          <p>Azad Jammu and Kashmir (AJK), the Pakistan-administered portion of the disputed Kashmir region, has experienced recurring waves of civil unrest since 2023, driven by a coalition of traders, transporters, lawyers, and students organized as the Jammu Kashmir Joint Awami Action Committee (JKJAAC).</p>
+          <h3>What they're protesting</h3>
+          <p>Grievances center on wheat and electricity subsidies, allegations of flour smuggling, and — increasingly — structural political demands: JKJAAC opposes the reservation of 12 seats in the AJK Legislative Assembly for refugees from Indian-administered Jammu and Kashmir who live elsewhere in Pakistan, arguing this lets non-residents dictate AJK's political affairs, and it has also demanded an end to the perks and privileges enjoyed by the region's political elite.</p>
+          <h3>Escalating rounds</h3>
+          <p>May 2024 protests ended with the federal and AJK governments accepting most demands, including a roughly $82 million grant and subsidies on wheat and electricity. A second round in September–October 2025 produced another negotiated agreement after a communications blackout. A third and more violent wave began 7 June 2026 around a fresh 38-point charter of demands; its second phase, launched 27 July 2026 to coincide with the AJK general election (which JKJAAC boycotted), saw a long march from Rawalakot to Muzaffarabad turn deadly, with over 50 protesters reported killed, including the brother of JKJAAC's leader Sardar Umar Nazir.</p>
+        `,
+        sources: "Wikipedia (2025 and 2026 Azad Kashmir protests)"
+      },
+      "jk": {
+        flag: "★ Pakistan role: claims sovereignty over the territory",
+        kicker: "Indian-administered J&K · statehood promised, not restored",
+        title: "Jammu & Kashmir: an elected government, but no statehood",
+        dek: "Six years after Article 370's revocation split the state into two union territories, the elected government of Chief Minister Omar Abdullah is still pressing New Delhi to make good on its promise to restore full statehood.",
+        status: ["CM Omar Abdullah (National Conference), since Oct 2024", "Still a Union Territory, not a state", "Lt. Governor retains extensive powers"],
+        body: `
+          <p>India's August 2019 revocation of Article 370 stripped Jammu and Kashmir of its special constitutional autonomy and split it into two centrally administered union territories — Jammu & Kashmir, and Ladakh — governed day-to-day by a New Delhi-appointed Lieutenant Governor with sweeping authority, rather than an elected state government. The move was accompanied by a lengthy communications shutdown, mass preventive detentions, and a heavy security deployment.</p>
+          <h3>Elections, but not statehood</h3>
+          <p>After more than five years of direct central rule, Jammu and Kashmir held Legislative Assembly elections in late 2024. Omar Abdullah's National Conference — part of India's broader opposition INDIA alliance — won and formed government, with Abdullah becoming chief minister in October 2024. But the territory remains a Union Territory, not a full state, and the Lieutenant Governor continues to hold extensive powers over police, land, and security matters that would normally sit with an elected state government elsewhere in India. The BJP-led central government had pledged before Parliament and the Supreme Court that statehood would eventually be restored, but as of mid-2026 no timeline has been set.</p>
+          <h3>A recurring flashpoint</h3>
+          <p>Abdullah and the National Conference have repeatedly protested in Srinagar and New Delhi — including a July 2026 demonstration at Jantar Mantar that police restricted — demanding the promised restoration of statehood, arguing the prolonged uncertainty damages both regional governance and India's broader democratic credibility in Kashmir.</p>
+        `,
+        sources: "ANI · Outlook India"
+      }
+    }
+  },
+  "governance": {
+    title: "Major governance & legal reforms",
+    topics: {
+      "pakistan-amendments": {
+        flag: "",
+        kicker: "Pakistan · courts and command restructured",
+        title: "Pakistan's 26th and 27th Amendments: the judiciary tamed, the military entrenched",
+        dek: "Two constitutional amendments in fourteen months have shifted judicial appointment power toward the executive and consolidated all three armed services under one officer with lifetime immunity.",
+        status: ["26th Amendment: Oct 2024", "27th Amendment: Nov 2025"],
+        body: `
+          <p>Pakistan's parliament passed the 26th Constitutional Amendment on 21 October 2024, transferring the power to appoint the Chief Justice from a straightforward seniority system to a parliamentary special committee, restructuring the Judicial Commission of Pakistan, and creating separate "Constitutional Benches" to handle constitutional cases — changes critics said placed the courts under greater executive influence, passed despite fierce PTI opposition amid ongoing allegations that the 2024 general election itself had been manipulated.</p>
+          <h3>The 27th Amendment</h3>
+          <p>Just over a year later, in the direct aftermath of the May 2025 four-day war with India, parliament passed the 27th Amendment (signed into law 13 November 2025) by a two-thirds majority. It created a new "Chief of Defence Forces" post, unifying command of the army, navy, and air force under Field Marshal Asim Munir with a five-year renewable term, granted lifetime legal immunity to both the president and the Chief of Defence Forces, established a new Federal Constitutional Court to take over constitutional cases from the Supreme Court (further diminishing that court's power), and extended the army chief's basic tenure from three to five years. Amnesty International and other rights groups have warned the changes undermine judicial independence and formalize the military's already dominant role in Pakistani politics — continuing a decades-long pattern in which Pakistan's civilian institutions have periodically ceded ground to the army.</p>
+        `,
+        sources: "ThePrint · Supreme Court Observer · Amnesty International · newsonair.gov.in"
+      },
+      "india-legal": {
+        flag: "★ Pakistan role: n/a",
+        kicker: "India · replacing colonial law",
+        title: "India's criminal law overhaul, CAA, and the Women's Reservation Act",
+        dek: "India retired its 19th-century colonial legal codes, implemented a contested citizenship law, and guaranteed a third of legislative seats to women.",
+        status: ["New codes in force since July 2024", "CAA notified 2024"],
+        body: `
+          <p>Effective 1 July 2024, India replaced the Indian Penal Code (1860), Code of Criminal Procedure (1973), and Indian Evidence Act (1872) — all rooted in British colonial-era law — with three new statutes: the Bharatiya Nyaya Sanhita, Bharatiya Nagarik Suraksha Sanhita, and Bharatiya Sakshya Adhiniyam. The government framed the overhaul as modernizing and "decolonizing" India's justice system, including provisions for electronic evidence and faster trial timelines; critics raised concerns about expanded police powers and vaguely worded provisions on offenses against the state.</p>
+          <h3>Citizenship Amendment Act</h3>
+          <p>The 2019 Citizenship Amendment Act, which fast-tracks Indian citizenship for Hindu, Sikh, Buddhist, Jain, Parsi, and Christian (but not Muslim) migrants who arrived from Pakistan, Bangladesh, and Afghanistan before 2015, was formally notified for implementation in 2024, five years after its passage sparked major protests over its explicit religious criterion.</p>
+          <h3>Women's reservation</h3>
+          <p>The Nari Shakti Vandan Adhiniyam (Women's Reservation Act), passed in 2023, reserves 33% of seats in the national parliament (Lok Sabha) and state legislative assemblies for women — though its implementation is tied to the next delimitation and census exercise, meaning the reserved seats will not take effect until after 2029.</p>
+        `,
+        sources: "PRS Legislative Research · Ministry of Law and Justice, India"
+      },
+      "bangladesh-reforms": {
+        flag: "★ Pakistan role: n/a",
+        kicker: "Bangladesh · rebuilding institutions",
+        title: "Bangladesh's reform commissions",
+        dek: "The Yunus interim government set up parallel commissions to redesign the constitution, electoral system, judiciary, and police before handing power to an elected government.",
+        status: ["Commissions largely concluded ahead of Feb 2026 election"],
+        body: `
+          <p>After Sheikh Hasina's ouster, the Yunus-led interim government established a series of reform commissions — covering constitutional reform, the electoral system, the judiciary, police, public administration, and anti-corruption — intended to dismantle the institutional levers Hasina's Awami League had used to entrench 15 years of rule. Recommendations fed into a "July Charter" of proposed institutional changes that was put to a public referendum alongside the February 2026 general election. The scope and pace of reform became a persistent point of tension between Yunus, who argued deep reform had to precede any election, and the BNP, which argued an elected government — not an unelected interim one — should carry out institutional redesign, and repeatedly pressed for an earlier vote.</p>
+        `,
+        sources: "The Diplomat · NPR"
+      },
+      "youth-protests": {
+        flag: "★ Pakistan role: comparable domestic unrest (AJK)",
+        kicker: "Global · a decade of youth uprisings",
+        title: "A global wave: Kenya, Nigeria, Iran, and Chile",
+        dek: "From Santiago to Lagos to Nairobi to Tehran, a common thread of youth-led, digitally organized protest against corruption, economic hardship, and repression has run through the past decade — echoing the South Asian upheavals above.",
+        status: ["Distinct national movements, similar generational dynamics"],
+        body: `
+          <h3>Kenya (2024) — the finance bill protests</h3>
+          <p>A proposed finance bill raising taxes on basic goods triggered youth-led "Gen Z" protests in June–July 2024, organized largely without traditional political party structures via social media. Protesters stormed parliament; President William Ruto withdrew the bill and reshuffled his cabinet, but underlying frustration over debt, taxation, and corruption persisted into subsequent years.</p>
+          <h3>Nigeria — #EndSARS (2020)</h3>
+          <p>Protests against police brutality, specifically the Special Anti-Robbery Squad (SARS) unit, spread nationwide in October 2020, becoming one of the largest protest movements in Nigeria's history before security forces opened fire on protesters at Lagos's Lekki Toll Gate, killing multiple demonstrators — a moment that remains a defining, contested reference point in Nigerian politics.</p>
+          <h3>Iran — "Woman, Life, Freedom" (2022–23)</h3>
+          <p>The September 2022 death in police custody of Mahsa Jina Amini, detained for allegedly violating hijab rules, ignited the largest and most sustained protest movement against Iran's clerical establishment in years, spreading to universities and schools nationwide before being suppressed through mass arrests and executions of protesters.</p>
+          <h3>Chile — Estallido Social (2019–2022)</h3>
+          <p>A subway fare increase triggered mass protests against inequality in October 2019 that forced a rewrite of Chile's Pinochet-era constitution; voters rejected the first draft in 2022 as too radical and a second, more conservative draft in 2023, leaving the original constitution in place despite the scale of the original uprising — a reminder that mass mobilization does not guarantee lasting institutional change.</p>
+        `,
+        sources: "Reuters · Human Rights Watch · Al Jazeera"
+      }
+    }
+  },
+  "pakistan-role": {
+    title: "Pakistan's role — a cross-cutting thread",
+    topics: {
+      "pakistan-thread": {
+        flag: "",
+        kicker: "Synthesis",
+        title: "Pulling the thread: Pakistan across every section",
+        dek: "Pakistan does not sit outside these stories — it runs through nearly all of them. Here is where it shows up, and how.",
+        status: ["Cross-cutting summary"],
+        body: `
+          <h3>Domestic political crisis (2022–present)</h3>
+          <p>Imran Khan's April 2022 ouster set off Pakistan's longest-running political crisis in decades: mass PTI protests, Khan's repeated arrests and eventual long-term imprisonment, a disputed 2024 election, and a coalition government under Shehbaz Sharif and Asif Ali Zardari that has governed with the military establishment's clear backing.</p>
+          <h3>The 2025 war with India</h3>
+          <p>The Pahalgam attack and India's Operation Sindoor response pulled Pakistan into its most serious military confrontation with India in over 50 years — a four-day exchange of air, missile, and drone strikes in May 2025 that both sides claim to have "won," and that reshaped Pakistan's domestic politics as much as its regional posture.</p>
+          <h3>A constitutionally entrenched military</h3>
+          <p>In direct response to that war, Pakistan passed the 27th Constitutional Amendment, consolidating all three armed services under Field Marshal Asim Munir as Chief of Defence Forces, with lifetime immunity and a five-year renewable term — layering onto the 26th Amendment's earlier weakening of judicial independence. Together, these mark one of the most significant formal expansions of military power in Pakistan's constitutional history.</p>
+          <h3>Kashmir, on both sides of the Line of Control</h3>
+          <p>Pakistan administers Azad Jammu & Kashmir and Gilgit-Baltistan, and continues to assert sovereignty claims over Indian-administered Jammu & Kashmir, making Kashmir the central, decades-old flashpoint in the India–Pakistan relationship — visible today both in the AJK protest movement against Islamabad's own governance of the territory, and in India's continued refusal to restore full statehood to J&K, which Pakistan regularly cites in its diplomatic messaging.</p>
+          <h3>Economy under IMF discipline</h3>
+          <p>Pakistan's 2022–2023 balance-of-payments crisis, worsened by catastrophic 2022 floods, forced it into a new IMF program that has stabilized macro indicators through 2024–2026 at the cost of subsidy cuts that have repeatedly triggered public unrest, most visibly in Azad Kashmir.</p>
+          <h3>Regional diplomacy</h3>
+          <p>Pakistan has cultivated warmer ties with Bangladesh's new BNP government under Tarique Rahman — notably absent from the historically close Hasina-era India–Bangladesh relationship — while continuing large-scale deportations of Afghan nationals (part of a broader crackdown tied to cross-border militancy concerns) and managing a fragile relationship with the Afghan Taliban government amid persistent attacks by Pakistani Taliban (TTP) militants in Khyber Pakhtunkhwa and Balochistan, where deadly bombings have continued into 2026, with some Pakistani officials publicly alleging Indian support for militant networks in the region.</p>
+          <h3>What's not directly a Pakistan story</h3>
+          <p>Pakistan plays no direct role in Ukraine, Gaza, Sudan, Myanmar, DRC, Haiti, or the Sahel conflicts, though it has voiced solidarity with Gaza and Sudan through the Organisation of Islamic Cooperation, and — like India, Sri Lanka, and Bangladesh — has been a recipient of IMF-brokered stabilization lending amid the broader post-pandemic debt and inflation shock described in the macro-shifts section.</p>
+        `,
+        sources: "Synthesized from sections above — see individual topic sources"
+      }
+    }
+  }
+};
+
+let currentSection = null, currentTopic = null;
+let flatList = [];
+
+function buildTOC(){
+  const container = document.getElementById('tocContainer');
+  container.innerHTML = '';
+  flatList = [];
+  let n = 1;
+  Object.keys(DATA).forEach(secKey => {
+    const sec = DATA[secKey];
+    const secDiv = document.createElement('div');
+    secDiv.className = 'toc-section';
+    secDiv.dataset.sec = secKey;
+    const title = document.createElement('div');
+    title.className = 'toc-section-title';
+    title.innerHTML = '<span class="n">' + String(n).padStart(2,'0') + '</span><span>' + sec.title + '</span>';
+    secDiv.appendChild(title);
+    n++;
+    Object.keys(sec.topics).forEach(topKey => {
+      const top = sec.topics[topKey];
+      flatList.push({sec: secKey, top: topKey});
+      const btn = document.createElement('button');
+      btn.className = 'toc-item';
+      btn.dataset.sec = secKey;
+      btn.dataset.top = topKey;
+      btn.dataset.search = (top.title + ' ' + top.kicker).toLowerCase();
+      btn.innerHTML = top.title + (top.flag ? '<span class="flag">' + top.flag + '</span>' : '');
+      btn.onclick = () => showTopic(secKey, topKey);
+      secDiv.appendChild(btn);
+    });
+    container.appendChild(secDiv);
+  });
+}
+
+function showTopic(secKey, topKey){
+  currentSection = secKey; currentTopic = topKey;
+  const top = DATA[secKey].topics[topKey];
+  document.querySelectorAll('.toc-item').forEach(b => {
+    b.classList.toggle('active', b.dataset.sec===secKey && b.dataset.top===topKey);
+  });
+  const idx = flatList.findIndex(f => f.sec===secKey && f.top===topKey);
+  const reader = document.getElementById('reader');
+  reader.innerHTML = `
+    <div class="article-kicker">${top.kicker}</div>
+    <h1 class="article-title">${top.title}</h1>
+    <p class="article-dek">${top.dek}</p>
+    <div class="status-row">${top.status.map(s => '<span class="status-pill">'+s+'</span>').join('')}</div>
+    <div class="article-body">${top.body}</div>
+    <div class="sources"><span class="lbl">Sources consulted</span>${top.sources}</div>
+    <div class="nav-buttons">
+      <button id="prevBtn">&larr; Previous</button>
+      <button id="nextBtn">Next &rarr;</button>
+    </div>
+  `;
+  document.getElementById('prevBtn').disabled = idx <= 0;
+  document.getElementById('nextBtn').disabled = idx >= flatList.length - 1;
+  document.getElementById('prevBtn').onclick = () => { if(idx>0) showTopic(flatList[idx-1].sec, flatList[idx-1].top); window.scrollTo(0,0); };
+  document.getElementById('nextBtn').onclick = () => { if(idx<flatList.length-1) showTopic(flatList[idx+1].sec, flatList[idx+1].top); window.scrollTo(0,0); };
+  window.scrollTo(0,0);
+}
+
+function filterTOC(q){
+  q = q.toLowerCase().trim();
+  document.querySelectorAll('.toc-item').forEach(b => {
+    b.style.display = (!q || b.dataset.search.includes(q)) ? '' : 'none';
+  });
+  document.querySelectorAll('.toc-section').forEach(s => {
+    const visible = Array.from(s.querySelectorAll('.toc-item')).some(b => b.style.display !== 'none');
+    s.style.display = visible ? '' : 'none';
+  });
+}
+
+buildTOC();
+showTopic('conflicts', 'ukraine');
+</script>
+</body>
+</html>
